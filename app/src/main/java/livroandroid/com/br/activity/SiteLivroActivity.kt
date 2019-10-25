@@ -29,10 +29,8 @@ class SiteLivroActivity : AppCompatActivity() {
         setupToolbar(R.id.toolbar, title, true)
 
         // Carrega a página
-        // setWebViewClient(webview)
-        //webview.loadUrl(URL_SOBRE)
-
-        webview.loadData("<html><body>HTML aqui </body></html>", "text/html", "UTF-8")
+        setWebViewClient(webview)
+        webview.loadUrl(URL_SOBRE)
 
         // Swipe to Refresh Layout
         swipeToRefresh.setOnRefreshListener {
