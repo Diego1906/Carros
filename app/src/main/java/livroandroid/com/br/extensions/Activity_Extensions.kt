@@ -1,10 +1,7 @@
 package livroandroid.com.br.extensions
 
-import android.app.Activity
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.IdRes
-import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -17,19 +14,6 @@ fun AppCompatActivity.onClick(@IdRes viewId: Int, onClick: (v: View?) -> Unit) {
         onClick(it)
     }
 }
-
-// Mostra um toast
-fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) = Toast
-    .makeText(this, message, duration)
-    .apply {
-        show()
-    }
-
-fun Activity.toast(@StringRes message: Int, duration: Int = Toast.LENGTH_SHORT) = Toast
-    .makeText(this, message, duration)
-    .apply {
-        show()
-    }
 
 // Configura a Toolbar
 fun AppCompatActivity.setupToolbar(

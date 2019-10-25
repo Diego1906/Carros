@@ -3,12 +3,14 @@ package livroandroid.com.br.activity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import livroandroid.com.br.R
 import livroandroid.com.br.extensions.setupToolbar
 import livroandroid.com.br.utils.TipoCarro
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -60,7 +62,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 startActivity<CarrosActivity>("tipo" to TipoCarro.luxo)
             }
             R.id.nav_item_site_livro -> {
-                toast("Clicou em site do livro")
+                startActivity<SiteLivroActivity>("title" to R.string.site_do_livro)
             }
             R.id.nav_item_settings -> {
                 toast("Clicou em configurações")
