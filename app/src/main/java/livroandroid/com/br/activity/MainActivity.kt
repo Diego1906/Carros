@@ -3,14 +3,12 @@ package livroandroid.com.br.activity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 import livroandroid.com.br.R
 import livroandroid.com.br.extensions.setupToolbar
 import livroandroid.com.br.utils.TipoCarro
-import org.jetbrains.anko.alert
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -26,20 +24,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     // Configura o Navigation Drawer
     private fun setupNavDrawer() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
             this,
-            drawer,
+            drawer_layout,
             toolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawer.addDrawerListener(toggle)
+        drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        val navigationView = findViewById<NavigationView>(R.id.nav_view)
-        navigationView.setNavigationItemSelectedListener(this)
+        nav_view.setNavigationItemSelectedListener(this)
     }
 
     // Trata o evento do Navigation Drawer
@@ -70,8 +65,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
         // Fecha o menu depois de tratar o evento
-        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        //drawer.closeDrawer(GravityCompat.START)
+        // drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 }

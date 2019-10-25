@@ -43,16 +43,16 @@ class AboutDialog : DialogFragment() {
 
     // Retorna a versão do app registrada no build.gradle
     private fun getAppVersionName(): String {
+
         val packageManager = activity?.packageManager
-        val packageName = activity?.packageName
+
+        lateinit var packageName: String
+        activity?.packageName?.let {
+            packageName = it
+        }
+
         lateinit var versionName: String
-
         try {
-//            val info = packageManager?.getPackageInfo(packageName, 0)
-//            info?.let {
-//                versionName = it.versionName
-//            }
-
             packageManager?.let {
                 versionName = it.getPackageInfo(packageName, 0).versionName
             }
