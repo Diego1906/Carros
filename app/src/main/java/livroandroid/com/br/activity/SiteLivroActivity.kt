@@ -58,7 +58,7 @@ class SiteLivroActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
 
-                // Desliga o progress
+                // Desliga o progressCarro
                 progress.visibility = View.INVISIBLE
 
                 // Finaliza o swipe

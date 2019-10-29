@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/cardViewCarroAdapter"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/dimen_6dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardElevation="@dimen/dimen_3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false"
+    card_view:cardCornerRadius="@dimen/dimen_2dp"
+    card_view:cardElevation="@dimen_6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nomeCarroAdapter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:textSize="@dimen/dimen_20sp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- Foto do carro -->
+            <ImageView
+                android:id="@+id/imgCarroAdapter"
+                android:layout_width="@dimen/foto_carro_width"
+                android:layout_height="@dimen/foto_carro_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_6dp"
+                android:contentDescription="@string/imagem_do_carro" />
+
+            <!-- Barra de progresso enquanto carrega a foto -->
+            <ProgressBar
+                android:id="@+id/progressCarroAdapter"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_vertical"
+                android:layout_marginStart="@dimen/dimen_6dp"
+                android:visibility="invisible" />
+        </FrameLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -2,21 +2,26 @@ package livroandroid.com.br.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_carros.*
 import livroandroid.com.br.R
+import livroandroid.com.br.activity.CarroActivity
+import livroandroid.com.br.activity.CarrosActivity
+import livroandroid.com.br.adapter.CarroAdapter
+import livroandroid.com.br.domain.Carro
+import livroandroid.com.br.domain.CarroService
+import livroandroid.com.br.extensions.toast
 import livroandroid.com.br.utils.TipoCarro
+import org.jetbrains.anko.startActivity
 
-/**
- * A simple [Fragment] subclass.
- */
 class CarrosFragment : BaseFragment() {
 
     private var tipo: TipoCarro = TipoCarro.classicos
+    private var carros = listOf<Carro>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +36,41 @@ class CarrosFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Retorna a view/res/layout/fragment_carros.xml
         val view = inflater.inflate(R.layout.fragment_carros, container, false)
-
-        val textViewCarrosFragment = view?.findViewById<TextView>(R.id.textCarros)
-
-        // Converte o R.string.xxx em texto
-        val tipoString = getString(tipo.string)
-        textViewCarrosFragment?.text = "Carros $tipoString"
-
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Views
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            itemAnimator = DefaultItemAnimator()
+            setHasFixedSize(true)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        taskCarros()
+    }
+
+    private fun taskCarros() {
+        // Busca os carros
+        context?.let {
+            this.carros = CarroService.getCarros(it, tipo)
+        }
+
+        // Atualiza a lista
+        recyclerView.adapter = CarroAdapter(carros) {
+            onClickCarro(it)
+        }
+    }
+
+    private fun onClickCarro(carro: Carro) {
+        // Ao clicar no carro vamos navegar para a tela de detalhes
+        activity?.startActivity<CarroActivity>("carro" to carro)
     }
 }

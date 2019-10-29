@@ -10,11 +10,23 @@
     <dimen name="foto_carro_width">260dp</dimen>
     <dimen name="foto_carro_height">110dp</dimen>
 
-    <!-- Largura/Altura da img do carro -->
+    <!-- Largura/Altura da imgCarro do carro -->
     <dimen name="img_carro_adapter_width">250dp</dimen>
     <dimen name="img_carro_adapter_height">107dp</dimen>
     <dimen name="img_carro_width">300dp</dimen>
     <dimen name="img_carro_height">128dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
+
+    <!-- Dimensões em DP -->
+    <dimen name="dimen_1dp">1dp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
+    <dimen name="dimen_3dp">3dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_12dp">12dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+
+    <!-- Dimensões em SP -->
+    <dimen name="dimen_20sp">20sp</dimen>
 
 </resources>

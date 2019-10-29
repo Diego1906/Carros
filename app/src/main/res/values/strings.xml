@@ -56,5 +56,6 @@
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="lista_de_carros_aqui">Lista de Carros aqui.</string>
+    <string name="imagem_do_carro">Imagem do carro</string>
 
 </resources>

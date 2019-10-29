@@ -36,4 +36,10 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
     // Anko Commons
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    // RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta05'
+    // CardView
+    implementation 'androidx.cardview:cardview:1.0.0'
+    // Picasso: lib para download de images
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
