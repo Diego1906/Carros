@@ -1,6 +1,7 @@
 package livroandroid.com.br.activity
 
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_carro.*
 import kotlinx.android.synthetic.main.activity_carro_contents.*
 import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
@@ -20,7 +21,7 @@ class CarroActivity : BaseActivity() {
         setContentView(R.layout.activity_carro)
 
         // Seta o nome do carro como título da Toolbar
-        setupToolbar(R.id.toolbar, carro.nome, true)
+        setupToolbar(R.id.toolBarCarroActivity, carro.nome, true)
 
         // Atualiza os dados do carro na tela
         initViews()
@@ -29,6 +30,6 @@ class CarroActivity : BaseActivity() {
     private fun initViews() {
         // Variáveis geradas automaticamente pelo Koltin Extensions (veja import)
         descricao_carro_contents.text = carro.desc
-        img_carro_contents.loadUrl(carro.urlFoto)
+        appBarImg.loadUrl(carro.urlFoto)
     }
 }

@@ -18,15 +18,20 @@
     <dimen name="app_bar_height">180dp</dimen>
 
     <!-- Dimensões em DP -->
-    <dimen name="dimen_1dp">1dp</dimen>
-    <dimen name="dimen_2dp">2dp</dimen>
-    <dimen name="dimen_3dp">3dp</dimen>
-    <dimen name="dimen_6dp">6dp</dimen>
-    <dimen name="dimen_8dp">8dp</dimen>
-    <dimen name="dimen_12dp">12dp</dimen>
-    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_3">3dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_150">150dp</dimen>
+    <dimen name="dp_320">320dp</dimen>
 
     <!-- Dimensões em SP -->
-    <dimen name="dimen_20sp">20sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
 
 </resources>

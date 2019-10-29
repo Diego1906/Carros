@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import livroandroid.com.br.R
@@ -23,6 +25,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setupToolbar(R.id.toolbar)
         setupNavDrawer()
         setupViewPagerTabs()
+
+        // FAB ( variável fab gerada automaticamente pelo Koltin Extensions )
+        fab.setOnClickListener {
+            Snackbar.make(it, "Clicou no botão FAB!", Snackbar.LENGTH_LONG).apply {
+                show()
+            }
+        }
     }
 
     private fun setupViewPagerTabs() {
@@ -86,7 +95,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
         // Fecha o menu depois de tratar o evento
-        // drawer_layout.closeDrawer(GravityCompat.START)
+        drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
 }
