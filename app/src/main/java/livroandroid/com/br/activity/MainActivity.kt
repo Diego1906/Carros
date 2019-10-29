@@ -3,10 +3,12 @@ package livroandroid.com.br.activity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import livroandroid.com.br.R
+import livroandroid.com.br.adapter.TabsAdapter
 import livroandroid.com.br.extensions.setupToolbar
 import livroandroid.com.br.utils.TipoCarro
 import org.jetbrains.anko.startActivity
@@ -20,6 +22,25 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         setupToolbar(R.id.toolbar)
         setupNavDrawer()
+        setupViewPagerTabs()
+    }
+
+    private fun setupViewPagerTabs() {
+        // Configura o ViewPager + Tabs
+        // As variáveis viewPager e tabLayout são geradas automaticamente pelo Kotlin Extensions
+
+        viewPager.apply {
+            offscreenPageLimit = 2
+            adapter = TabsAdapter(context, supportFragmentManager)
+        }
+
+        // Cor branca no texto (o fundo azul é definido no layout)
+        val cor = ContextCompat.getColor(context, R.color.white)
+
+        tabLayout.apply {
+            setupWithViewPager(viewPager, true)
+            setTabTextColors(cor, cor)
+        }
     }
 
     // Configura o Navigation Drawer

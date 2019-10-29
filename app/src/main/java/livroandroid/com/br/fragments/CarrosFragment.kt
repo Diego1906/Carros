@@ -10,11 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_carros.*
 import livroandroid.com.br.R
 import livroandroid.com.br.activity.CarroActivity
-import livroandroid.com.br.activity.CarrosActivity
 import livroandroid.com.br.adapter.CarroAdapter
 import livroandroid.com.br.domain.Carro
 import livroandroid.com.br.domain.CarroService
-import livroandroid.com.br.extensions.toast
 import livroandroid.com.br.utils.TipoCarro
 import org.jetbrains.anko.startActivity
 
