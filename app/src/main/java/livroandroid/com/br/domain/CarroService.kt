@@ -1,31 +1,36 @@
 package livroandroid.com.br.domain
 
 import android.content.Context
+import livroandroid.com.br.R
+import livroandroid.com.br.extensions.fromJson
 import livroandroid.com.br.utils.TipoCarro
 
 object CarroService {
 
+    private val TAG = "livro"
+
     // Busca os carros por tipo (clássicos, esportivos ou luxo)
     fun getCarros(context: Context, tipo: TipoCarro): List<Carro> {
 
-        val tipoString = context.getString(tipo.string)
+        // Este é o arquivo JSON que temos de ler
+        val raw = getArquivoRaw(tipo)
 
-        // Cria um list vazio de carros
-        val carros = mutableListOf<Carro>()
+        // Abre o arquivo para leitura
+        val inputStream = context.resources.openRawResource(raw)
+        inputStream.bufferedReader().use {
+            // Lê o JSON e cria a lista de carros através da função parserJson(json)
+            val json = it.readText()
 
-        // Cria 20 carros
-        for (i in 0..19) {
-            val carro = Carro()
-
-            // Nome do carro dinâmico para brincar
-            carro.nome = "Carro $tipoString: $i"
-            carro.desc = "Desc $i"
-
-            // URL da Foto fixa por enquanto
-            carro.urlFoto =
-                "http://www.livroandroid.com.br/livro/carros/esportivos/Ferrari_FF.png"
-            carros.add(carro)
+            // Converte o JSON para List<Carro>
+            val carros = fromJson<List<Carro>>(json)
+            return carros
         }
-        return carros
+    }
+
+    // Retorna o arquivo que temos de ler para o tipo de carro informado
+    private fun getArquivoRaw(tipo: TipoCarro) = when (tipo) {
+        TipoCarro.classicos -> R.raw.carros_classicos
+        TipoCarro.esportivos -> R.raw.carros_esportivos
+        else -> R.raw.carros_luxo
     }
 }
