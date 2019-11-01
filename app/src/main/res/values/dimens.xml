@@ -6,11 +6,11 @@
     <!-- FAB -->
     <dimen name="fab_margin">16dp</dimen>
 
-    <!-- Foto do carro -->
+    <!-- Foto do carroExtras -->
     <dimen name="foto_carro_width">260dp</dimen>
     <dimen name="foto_carro_height">110dp</dimen>
 
-    <!-- Largura/Altura da imgCarro do carro -->
+    <!-- Largura/Altura da imgCarro do carroExtras -->
     <dimen name="img_carro_adapter_width">250dp</dimen>
     <dimen name="img_carro_adapter_height">107dp</dimen>
     <dimen name="img_carro_width">300dp</dimen>
@@ -33,5 +33,6 @@
     <!-- Dimensões em SP -->
     <dimen name="sp_16">16sp</dimen>
     <dimen name="sp_20">20sp</dimen>
+    <dimen name="dp_260">260dp</dimen>
 
 </resources>

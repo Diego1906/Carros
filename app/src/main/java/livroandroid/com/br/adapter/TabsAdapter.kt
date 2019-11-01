@@ -11,7 +11,7 @@ import livroandroid.com.br.utils.TipoCarro
 class TabsAdapter(private val context: Context, fragmentManager: FragmentManager) :
     FragmentPagerAdapter(fragmentManager) {
 
-    // Retorna o tipo de carro pelo posição
+    // Retorna o tipo de carroExtras pelo posição
     fun getTipoCarro(position: Int) = when (position) {
         0 -> TipoCarro.classicos
         1 -> TipoCarro.esportivos
@@ -28,10 +28,12 @@ class TabsAdapter(private val context: Context, fragmentManager: FragmentManager
     }
 
     // Fragment que vai mostrar a lista de carros
-    override fun getItem(position: Int): Fragment = CarrosFragment()
-        .apply {
-            arguments = Bundle().apply {
-                putSerializable("tipo", getTipoCarro(position))
+    override fun getItem(position: Int): Fragment {
+        return CarrosFragment()
+            .apply {
+                arguments = Bundle().apply {
+                    putSerializable("tipo", getTipoCarro(position))
+                }
             }
-        }
+    }
 }

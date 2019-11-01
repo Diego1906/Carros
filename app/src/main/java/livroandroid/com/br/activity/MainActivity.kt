@@ -1,18 +1,20 @@
 package livroandroid.com.br.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import livroandroid.com.br.R
 import livroandroid.com.br.adapter.TabsAdapter
 import livroandroid.com.br.extensions.setupToolbar
+import livroandroid.com.br.utils.AndroidUtils
 import livroandroid.com.br.utils.TipoCarro
+import livroandroid.com.br.utils.showMessageNoInternet
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -26,18 +28,20 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setupNavDrawer()
         setupViewPagerTabs()
 
+        if (AndroidUtils.isNetworkAvailable(context).not()) {
+            showMessageNoInternet()
+            return
+        }
+
         // FAB ( variável fab gerada automaticamente pelo Koltin Extensions )
         fab.setOnClickListener {
-            Snackbar.make(it, "Clicou no botão FAB!", Snackbar.LENGTH_LONG).apply {
-                show()
-            }
+            startActivity<CarroFormActivity>()
         }
     }
 
+    // Configura o ViewPager + Tabs
     private fun setupViewPagerTabs() {
-        // Configura o ViewPager + Tabs
         // As variáveis viewPager e tabLayout são geradas automaticamente pelo Kotlin Extensions
-
         viewPager.apply {
             offscreenPageLimit = 2
             adapter = TabsAdapter(context, supportFragmentManager)
@@ -69,21 +73,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     // Trata o evento do Navigation Drawer
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_item_carros_todos -> {
                 toast("Clicou em carros")
             }
             R.id.nav_item_carros_classicos -> {
-
                 startActivity<CarrosActivity>("tipo" to TipoCarro.classicos)
             }
             R.id.nav_item_carros_esportivos -> {
-
                 startActivity<CarrosActivity>("tipo" to TipoCarro.esportivos)
             }
             R.id.nav_item_carros_luxo -> {
-
                 startActivity<CarrosActivity>("tipo" to TipoCarro.luxo)
             }
             R.id.nav_item_site_livro -> {

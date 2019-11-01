@@ -32,12 +32,12 @@ class CarroAdapter(val carros: List<Carro>, val onClick: (Carro) -> Unit) :
     // Faz o bind para atualizar o valor das views com os dados do Carro
     override fun onBindViewHolder(holder: CarrosViewHolder, position: Int) {
 
-        // Recupera o objeto carro na posição X
+        // Recupera o objeto carroExtras na posição X
         val carro = carros[position]
 
         // O holder.itemView contém as variáveis definidas no XML do adapter (lembre do nome de cada id)
         with(holder.itemView) {
-            // Atualiza os dados do carro
+            // Atualiza os dados do carroExtras
             nomeCarroAdapter.text = carro.nome
 
             // Deixa visível o progressbar

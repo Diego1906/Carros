@@ -14,18 +14,21 @@ import livroandroid.com.br.adapter.CarroAdapter
 import livroandroid.com.br.domain.Carro
 import livroandroid.com.br.domain.CarroService
 import livroandroid.com.br.utils.TipoCarro
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.uiThread
 
 class CarrosFragment : BaseFragment() {
 
-    private var tipo: TipoCarro = TipoCarro.classicos
-    private var carros = listOf<Carro>()
+    private val tipo: TipoCarro by lazy {
+        arguments?.getSerializable("tipo") as TipoCarro
+    }
+
+    private lateinit var carros: List<Carro>
+    private lateinit var adapter: CarroAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Lê o parâmetro tipo enviado ( clássicos, esportivos ou luxo )
-        tipo = arguments?.getSerializable("tipo") as TipoCarro
     }
 
     // Cria a view do fragment
@@ -52,23 +55,37 @@ class CarrosFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+
         taskCarros()
     }
 
     private fun taskCarros() {
-        // Busca os carros
-        context?.let {
-            this.carros = CarroService.getCarros(it, tipo)
-        }
 
-        // Atualiza a lista
-        recyclerView.adapter = CarroAdapter(carros) {
-            onClickCarro(it)
+        // Abre uma thread
+        doAsync {
+
+            // Busca os carros
+            carros = CarroService.getCarros(tipo)
+
+//            adapter = CarroAdapter(carros) {
+//                onClickCarro(it)
+//            }
+
+            adapter = CarroAdapter(carros, ::onClickCarro)
+
+            // Atualiza a lista na UI Thread
+            uiThread {
+
+                adapter.let {
+                    recyclerView.adapter = it
+                    it.notifyDataSetChanged()
+                }
+            }
         }
     }
 
     private fun onClickCarro(carro: Carro) {
-        // Ao clicar no carro vamos navegar para a tela de detalhes
-        activity?.startActivity<CarroActivity>("carro" to carro)
+        // Ao clicar no carroExtras vamos navegar para a tela de detalhes
+        activity?.startActivity<CarroActivity>("carroExtras" to carro)
     }
 }

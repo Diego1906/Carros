@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <!-- Foto do carro -->
+            <!-- Foto do carroExtras -->
             <ImageView
                 android:id="@+id/imgCarroAdapter"
                 android:layout_width="@dimen/foto_carro_width"

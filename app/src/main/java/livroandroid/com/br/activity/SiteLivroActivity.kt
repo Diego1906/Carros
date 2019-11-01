@@ -13,7 +13,7 @@ import livroandroid.com.br.R
 import livroandroid.com.br.activity.dialogs.AboutDialog
 import livroandroid.com.br.extensions.setupToolbar
 
-class SiteLivroActivity : AppCompatActivity() {
+class SiteLivroActivity : BaseActivity() {
 
     private val URL_SOBRE = "http://livroandroid.com.br/sobre.htm"
 

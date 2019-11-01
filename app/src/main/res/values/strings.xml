@@ -57,5 +57,12 @@
     <string name="navigation_drawer_close">Close</string>
     <string name="lista_de_carros_aqui">Lista de Carros aqui.</string>
     <string name="imagem_do_carro">Imagem do carro</string>
+    <string name="action_editar">Editar</string>
+    <string name="action_deletar">Deletar</string>
+    <string name="para_simplificar_a_demo">Para simplificar a demo, só podemos enviar o tipo, nome, descrição e a foto do Carro.</string>
+    <string name="novo_carro">Novo Carro</string>
+    <string name="action_salvar">Salvar</string>
+    <string name="msg_error_form_nome">Nome é obrigatório</string>
+    <string name="msg_error_form_desc">Descrição é obrigatório</string>
 
 </resources>

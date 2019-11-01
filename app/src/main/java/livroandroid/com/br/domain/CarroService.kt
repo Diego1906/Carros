@@ -1,36 +1,36 @@
 package livroandroid.com.br.domain
 
-import android.content.Context
-import livroandroid.com.br.R
 import livroandroid.com.br.extensions.fromJson
+import livroandroid.com.br.extensions.toJson
+import livroandroid.com.br.utils.HttpHelper
 import livroandroid.com.br.utils.TipoCarro
 
 object CarroService {
 
-    private val TAG = "livro"
+    private var BASE_URL = "http://livrowebservices.com.br/rest/carros"
 
     // Busca os carros por tipo (clássicos, esportivos ou luxo)
-    fun getCarros(context: Context, tipo: TipoCarro): List<Carro> {
+    fun getCarros(tipo: TipoCarro): List<Carro> {
 
-        // Este é o arquivo JSON que temos de ler
-        val raw = getArquivoRaw(tipo)
-
-        // Abre o arquivo para leitura
-        val inputStream = context.resources.openRawResource(raw)
-        inputStream.bufferedReader().use {
-            // Lê o JSON e cria a lista de carros através da função parserJson(json)
-            val json = it.readText()
-
-            // Converte o JSON para List<Carro>
-            val carros = fromJson<List<Carro>>(json)
-            return carros
-        }
+        val url = "$BASE_URL/tipo/${tipo.name}"
+        val json = HttpHelper.get(url)
+        val carros = fromJson<List<Carro>>(json)
+        return carros
     }
 
-    // Retorna o arquivo que temos de ler para o tipo de carro informado
-    private fun getArquivoRaw(tipo: TipoCarro) = when (tipo) {
-        TipoCarro.classicos -> R.raw.carros_classicos
-        TipoCarro.esportivos -> R.raw.carros_esportivos
-        else -> R.raw.carros_luxo
+    // Salva um carroExtras
+    fun save(carro: Carro): Response {
+        // Faz POST  do JSON carroExtras
+        val json = HttpHelper.post(BASE_URL, carro.toJson())
+        val response = fromJson<Response>(json)
+        return response
+    }
+
+    // Deleta um carroExtras
+    fun delete(carro: Carro): Response {
+        val url = "$BASE_URL/${carro.id}"
+        val json = HttpHelper.delete(url)
+        val response = fromJson<Response>(json)
+        return response
     }
 }
