@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_carro_form.*
 import kotlinx.android.synthetic.main.activity_carro_form_contents.*
 import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
-import livroandroid.com.br.domain.CarroService
+import livroandroid.com.br.domain.CarroServiceRetrofit
 import livroandroid.com.br.extensions.loadUrl
 import livroandroid.com.br.extensions.setupToolbar
 import livroandroid.com.br.utils.TipoCarro
@@ -103,7 +103,7 @@ class CarroFormActivity : BaseActivity() {
             }
 
             // Salva o carroExtras no servidor
-            val response = CarroService.save(carro)
+            val response = CarroServiceRetrofit.save(carro)
 
             uiThread {
 

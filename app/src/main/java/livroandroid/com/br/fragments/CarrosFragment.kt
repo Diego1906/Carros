@@ -24,8 +24,6 @@ class CarrosFragment : BaseFragment() {
         arguments?.getSerializable("tipo") as TipoCarro
     }
 
-    //private  var carros: List<Carro>? = null
-
     private lateinit var carros: List<Carro>
     private lateinit var adapter: CarroAdapter
 
@@ -69,8 +67,7 @@ class CarrosFragment : BaseFragment() {
             // Busca os carros
             carros = CarroServiceRetrofit.getCarros(tipo = tipo)
 
-            // carros = CarroService.getCarros(tipo)
-
+            // carros = CarroServiceOkHttp.getCarros(tipo)
 
             adapter = CarroAdapter(carros, ::onClickCarro)
 

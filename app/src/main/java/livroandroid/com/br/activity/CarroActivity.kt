@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.activity_carro.*
 import kotlinx.android.synthetic.main.activity_carro_contents.*
 import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
-import livroandroid.com.br.domain.CarroService
+import livroandroid.com.br.domain.CarroServiceRetrofit
 import livroandroid.com.br.extensions.loadUrl
 import livroandroid.com.br.extensions.setupToolbar
 import org.jetbrains.anko.*
@@ -69,11 +69,14 @@ class CarroActivity : BaseActivity() {
 
         doAsync {
 
-            val response = CarroService.delete(carro)
+            val response = CarroServiceRetrofit.delete(carro)
 
             uiThread {
 
-                toast(response.msg)
+                response?.let {
+                    toast(it.msg)
+                }
+
                 finish()
             }
         }
