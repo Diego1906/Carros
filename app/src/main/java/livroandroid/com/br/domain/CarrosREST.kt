@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface CarrosREST {
+
     @GET("tipo/{tipo}")
     fun getCarros(@Path("tipo") tipo: String): Call<List<Carro>>
 

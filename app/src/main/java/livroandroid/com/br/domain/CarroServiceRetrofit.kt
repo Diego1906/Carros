@@ -4,41 +4,28 @@ import livroandroid.com.br.utils.TipoCarro
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object CarroServiceRetrofit {
+class CarroServiceRetrofit {
 
-    private var BASE_URL = "http://livrowebservices.com.br/rest/carros"
-    private var service: CarrosREST
+    private var BASE_URL = "http://livrowebservices.com.br/rest/carros/"
 
-    private val listCarros: List<Carro> = mutableListOf<Carro>()
+    private var retrofit : Retrofit
+    private val listCarros: List<Carro> = mutableListOf()
 
     init {
-        val retrofit = Retrofit.Builder()
+         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        service = retrofit.create(CarrosREST::class.java)
     }
+
+    fun getService() =  retrofit.create(CarrosREST::class.java)
 
     // Busca os carros por tipo (clássicos, esportivos ou luxo)
-    fun getCarros(tipo: TipoCarro): List<Carro> {
-
-        val call = service.getCarros(tipo.name)
-        val carros = call.execute().body()
-        return carros ?: listCarros
-    }
+    fun getCarros(tipo: TipoCarro) =  getService().getCarros(tipo.name).execute().body() ?: listCarros
 
     // Salva um carro
-    fun save(carro: Carro): Response? {
-        val call = service.save(carro)
-        val response = call.execute().body()
-        return response
-    }
+    fun save(carro: Carro) = getService().save(carro).execute()?.body()
 
     // Deleta um carro
-    fun delete(carro: Carro): Response? {
-        val call = service.delete(carro.id)
-        val response = call.execute().body()
-        return response
-    }
+    fun delete(carro: Carro) = getService().delete(carro.id).execute()?.body()
 }
