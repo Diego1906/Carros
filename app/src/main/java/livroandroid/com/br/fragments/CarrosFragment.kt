@@ -12,7 +12,7 @@ import livroandroid.com.br.R
 import livroandroid.com.br.activity.CarroActivity
 import livroandroid.com.br.adapter.CarroAdapter
 import livroandroid.com.br.domain.Carro
-import livroandroid.com.br.domain.CarroService
+import livroandroid.com.br.domain.CarroServiceRetrofit
 import livroandroid.com.br.utils.TipoCarro
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
@@ -23,6 +23,8 @@ class CarrosFragment : BaseFragment() {
     private val tipo: TipoCarro by lazy {
         arguments?.getSerializable("tipo") as TipoCarro
     }
+
+    //private  var carros: List<Carro>? = null
 
     private lateinit var carros: List<Carro>
     private lateinit var adapter: CarroAdapter
@@ -65,29 +67,25 @@ class CarrosFragment : BaseFragment() {
         doAsync {
 
             // Busca os carros
-            CarroService.getCarros(tipo)?.let {
-                carros = it
-            }
+            carros = CarroServiceRetrofit.getCarros(tipo)
 
-//            adapter = CarroAdapter(carros) {
-//                onClickCarro(it)
-//            }
+            // carros = CarroService.getCarros(tipo)
+
 
             adapter = CarroAdapter(carros, ::onClickCarro)
 
             // Atualiza a lista na UI Thread
             uiThread {
 
-                adapter.let {
-                    recyclerView.adapter = it
-                    it.notifyDataSetChanged()
+                recyclerView.adapter = adapter.apply {
+                    notifyDataSetChanged()
                 }
             }
         }
     }
 
+    // Ao clicar no carro vamos navegar para a tela de detalhes
     private fun onClickCarro(carro: Carro) {
-        // Ao clicar no carroExtras vamos navegar para a tela de detalhes
         activity?.startActivity<CarroActivity>("carroExtras" to carro)
     }
 }

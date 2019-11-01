@@ -66,13 +66,14 @@ class CarroActivity : BaseActivity() {
 
     // Exclui um carro do servidor
     fun taskExcluir() {
+
         doAsync {
+
             val response = CarroService.delete(carro)
 
             uiThread {
-                response?.let {
-                    toast(it.msg)
-                }
+
+                toast(response.msg)
                 finish()
             }
         }

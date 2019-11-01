@@ -6,7 +6,6 @@ import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_site_livro.*
 import kotlinx.android.synthetic.main.include_progress.*
 import livroandroid.com.br.R
