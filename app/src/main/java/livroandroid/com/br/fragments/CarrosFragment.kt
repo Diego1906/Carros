@@ -67,7 +67,7 @@ class CarrosFragment : BaseFragment() {
         doAsync {
 
             // Busca os carros
-            carros = CarroServiceRetrofit().getCarros(tipo = tipo)
+            carros = CarroServiceRetrofit.getCarros(tipo = tipo)
 
             // carros = CarroService.getCarros(tipo)
 
