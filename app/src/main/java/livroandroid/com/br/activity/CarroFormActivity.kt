@@ -108,7 +108,9 @@ class CarroFormActivity : BaseActivity() {
             uiThread {
 
                 // mensagem com a resposta do servidor
-                toast(response.msg)
+                response?.let {
+                    toast(it.msg)
+                }
                 finish()
             }
         }

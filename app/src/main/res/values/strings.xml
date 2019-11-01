@@ -64,5 +64,8 @@
     <string name="action_salvar">Salvar</string>
     <string name="msg_error_form_nome">Nome é obrigatório</string>
     <string name="msg_error_form_desc">Descrição é obrigatório</string>
+    <string name="msg_confirma_excluir_carro">Confirma excluir este carro?</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
 
 </resources>

@@ -65,7 +65,9 @@ class CarrosFragment : BaseFragment() {
         doAsync {
 
             // Busca os carros
-            carros = CarroService.getCarros(tipo)
+            CarroService.getCarros(tipo)?.let {
+                carros = it
+            }
 
 //            adapter = CarroAdapter(carros) {
 //                onClickCarro(it)

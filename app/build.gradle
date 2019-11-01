@@ -33,7 +33,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "com.google.android.material:material:1.0.0"
+
+    // Material Design
+    implementation 'com.google.android.material:material:1.0.0'
     // Anko Commons
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
     // RecyclerView
@@ -45,5 +47,9 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.2.1")
+    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    // Conversor Gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }

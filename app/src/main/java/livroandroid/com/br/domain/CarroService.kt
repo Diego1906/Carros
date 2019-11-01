@@ -1,36 +1,42 @@
 package livroandroid.com.br.domain
 
-import livroandroid.com.br.extensions.fromJson
-import livroandroid.com.br.extensions.toJson
-import livroandroid.com.br.utils.HttpHelper
 import livroandroid.com.br.utils.TipoCarro
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 object CarroService {
 
     private var BASE_URL = "http://livrowebservices.com.br/rest/carros"
+    private var service: CarrosREST
+
+    init {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        service = retrofit.create(CarrosREST::class.java)
+    }
 
     // Busca os carros por tipo (clássicos, esportivos ou luxo)
-    fun getCarros(tipo: TipoCarro): List<Carro> {
+    fun getCarros(tipo: TipoCarro): List<Carro>? {
 
-        val url = "$BASE_URL/tipo/${tipo.name}"
-        val json = HttpHelper.get(url)
-        val carros = fromJson<List<Carro>>(json)
+        val call = service.getCarros(tipo.name)
+        val carros = call.execute().body()
         return carros
     }
 
-    // Salva um carroExtras
-    fun save(carro: Carro): Response {
-        // Faz POST  do JSON carroExtras
-        val json = HttpHelper.post(BASE_URL, carro.toJson())
-        val response = fromJson<Response>(json)
+    // Salva um carro
+    fun save(carro: Carro): Response? {
+        val call = service.save(carro)
+        val response = call.execute().body()
         return response
     }
 
-    // Deleta um carroExtras
-    fun delete(carro: Carro): Response {
-        val url = "$BASE_URL/${carro.id}"
-        val json = HttpHelper.delete(url)
-        val response = fromJson<Response>(json)
+    // Deleta um carro
+    fun delete(carro: Carro): Response? {
+        val call = service.delete(carro.id)
+        val response = call.execute().body()
         return response
     }
 }

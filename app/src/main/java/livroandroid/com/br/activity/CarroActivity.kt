@@ -7,10 +7,10 @@ import kotlinx.android.synthetic.main.activity_carro.*
 import kotlinx.android.synthetic.main.activity_carro_contents.*
 import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
+import livroandroid.com.br.domain.CarroService
 import livroandroid.com.br.extensions.loadUrl
 import livroandroid.com.br.extensions.setupToolbar
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.alert
+import org.jetbrains.anko.*
 
 class CarroActivity : BaseActivity() {
 
@@ -50,9 +50,31 @@ class CarroActivity : BaseActivity() {
                 finish()
             }
             R.id.action_deletar -> {
-                TODO("Deletar carroExtras")
+                alert(R.string.msg_confirma_excluir_carro, R.string.app_name) {
+                    positiveButton(R.string.sim) {
+                        // Confirmou o excluir
+                        taskExcluir()
+                    }
+                    negativeButton(R.string.nao) {
+                        // Não confirmou
+                    }
+                }.show()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    // Exclui um carro do servidor
+    fun taskExcluir() {
+        doAsync {
+            val response = CarroService.delete(carro)
+
+            uiThread {
+                response?.let {
+                    toast(it.msg)
+                }
+                finish()
+            }
+        }
     }
 }
