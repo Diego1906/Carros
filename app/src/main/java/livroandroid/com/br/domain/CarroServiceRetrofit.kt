@@ -1,12 +1,15 @@
 package livroandroid.com.br.domain
 
+import livroandroid.com.br.domain.dao.DatabaseManager
 import livroandroid.com.br.utils.TipoCarro
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object CarroServiceRetrofit {
 
-    private var BASE_URL = "http://livrowebservices.com.br/rest/carros/"
+    // ANTIGO
+    // private var BASE_URL = "http://livrowebservices.com.br/rest/carros/"
+    private var BASE_URL = "https://carros-springboot.herokuapp.com/api/v1/carros/"
     private var service: CarrosREST
     private val listCarros: List<Carro> = mutableListOf()
 
@@ -25,5 +28,15 @@ object CarroServiceRetrofit {
     fun save(carro: Carro) = service.save(carro).execute().body()
 
     // Deleta um carro
-    fun delete(carro: Carro) = service.delete(carro.id).execute().body()
+    fun delete(carro: Carro): Response? {
+        val response: Response? = service.delete(carro.id).execute().body()
+
+        response?.let {
+            if (it.isOK()) {
+                val dao = DatabaseManager.getCarroDAO()
+                dao.delete(carro)
+            }
+        }
+        return response
+    }
 }

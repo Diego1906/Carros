@@ -1,5 +1,6 @@
 package livroandroid.com.br.domain
 
+import livroandroid.com.br.domain.dao.DatabaseManager
 import livroandroid.com.br.extensions.fromJson
 import livroandroid.com.br.extensions.toJson
 import livroandroid.com.br.utils.HttpHelper
@@ -7,7 +8,9 @@ import livroandroid.com.br.utils.TipoCarro
 
 object CarroServiceOkHttp {
 
-    private var BASE_URL = "http://livrowebservices.com.br/rest/carros"
+    // ANTIGO
+    // private var BASE_URL = "http://livrowebservices.com.br/rest/carros"
+    private var BASE_URL = "https://carros-springboot.herokuapp.com/api/v1/carros"
 
     // Busca os carros por tipo (clássicos, esportivos ou luxo)
     fun getCarros(tipo: TipoCarro): List<Carro> {
@@ -30,6 +33,12 @@ object CarroServiceOkHttp {
         val url = "$BASE_URL/${carro.id}"
         val json = HttpHelper.delete(url)
         val response = fromJson<Response>(json)
+
+        if (response.isOK()) {
+            // Se removeu do servidor, remove dos favoritos
+            val dao = DatabaseManager.getCarroDAO()
+            dao.delete(carro)
+        }
         return response
     }
 }

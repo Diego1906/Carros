@@ -2,9 +2,14 @@ package livroandroid.com.br.domain
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "carro")
 class Carro() : Parcelable {
+    @PrimaryKey
     var id: Long = 0
+
     var tipo: String? = ""
     var nome: String? = ""
     var desc: String? = ""

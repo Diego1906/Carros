@@ -18,17 +18,19 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 
-class CarrosFragment : BaseFragment() {
+open class CarrosFragment : BaseFragment() {
 
-    private val tipo: TipoCarro by lazy {
-        arguments?.getSerializable("tipo") as TipoCarro
-    }
+    private var tipo = TipoCarro.classicos
 
-    private lateinit var carros: List<Carro>
+    protected lateinit var carros: List<Carro>
     private lateinit var adapter: CarroAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (arguments != null) {
+            tipo = arguments?.getSerializable("tipo") as TipoCarro
+        }
     }
 
     // Cria a view do fragment
@@ -59,14 +61,13 @@ class CarrosFragment : BaseFragment() {
         taskCarros()
     }
 
-    private fun taskCarros() {
+    open fun taskCarros() {
 
         // Abre uma thread
         doAsync {
 
             // Busca os carros
             carros = CarroServiceRetrofit.getCarros(tipo = tipo)
-
             // carros = CarroServiceOkHttp.getCarros(tipo)
 
             adapter = CarroAdapter(carros, ::onClickCarro)
@@ -82,7 +83,7 @@ class CarrosFragment : BaseFragment() {
     }
 
     // Ao clicar no carro vamos navegar para a tela de detalhes
-    private fun onClickCarro(carro: Carro) {
+    open fun onClickCarro(carro: Carro) {
         activity?.startActivity<CarroActivity>("carroExtras" to carro)
     }
 }

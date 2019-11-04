@@ -67,5 +67,8 @@
     <string name="msg_confirma_excluir_carro">Confirma excluir este carro?</string>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="msg_carro_favoritado">Carro adicionado aos favoritos.</string>
+    <string name="msg_carro_desfavoritado">Carro removido dos favoritos.</string>
 
 </resources>
