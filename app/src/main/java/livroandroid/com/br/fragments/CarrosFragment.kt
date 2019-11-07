@@ -12,6 +12,7 @@ import livroandroid.com.br.R
 import livroandroid.com.br.activity.CarroActivity
 import livroandroid.com.br.adapter.CarroAdapter
 import livroandroid.com.br.domain.Carro
+import livroandroid.com.br.domain.CarroServiceOkHttp
 import livroandroid.com.br.domain.CarroServiceRetrofit
 import livroandroid.com.br.utils.TipoCarro
 import org.jetbrains.anko.doAsync
@@ -67,8 +68,8 @@ open class CarrosFragment : BaseFragment() {
         doAsync {
 
             // Busca os carros
-            carros = CarroServiceRetrofit.getCarros(tipo = tipo)
-            // carros = CarroServiceOkHttp.getCarros(tipo)
+            //carros = CarroServiceRetrofit.getCarros(tipo = tipo)
+            carros = CarroServiceOkHttp.getCarros(tipo)
 
             adapter = CarroAdapter(carros, ::onClickCarro)
 

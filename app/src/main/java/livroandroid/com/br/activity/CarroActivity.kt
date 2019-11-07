@@ -1,6 +1,8 @@
 package livroandroid.com.br.activity
 
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_carro.*
 import kotlinx.android.synthetic.main.activity_carro_contents.*
 import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
+import livroandroid.com.br.domain.CarroServiceOkHttp
 import livroandroid.com.br.domain.CarroServiceRetrofit
 import livroandroid.com.br.domain.FavoritosService
 import livroandroid.com.br.extensions.loadUrl
@@ -33,13 +36,26 @@ class CarroActivity : BaseActivity() {
         initViews()
 
         // Variável gerada automaticamente pelo Kotlin Extensions
-        fab.setOnClickListener { onClickFavoritar(carro) }
+        fab.setOnClickListener {
+            onClickFavoritar(carro)
+        }
     }
 
     private fun initViews() {
         // Variáveis geradas automaticamente pelo Koltin Extensions (veja import)
         descricao_carro_contents.text = carro.desc
         appBarImg.loadUrl(carro.urlFoto)
+
+        // Foto do Carro (pequena com transparência)
+        img.loadUrl(carro.urlFoto)
+
+        // Toca o vídeo
+        imgPlayVideo.setOnClickListener {
+            startActivity(
+                Intent(Intent.ACTION_VIEW).apply {
+                    setDataAndType(Uri.parse(carro.urlVideo), "video/*")
+                })
+        }
     }
 
     // Adiciona ou Remove o carro dos Favoritos
@@ -134,7 +150,8 @@ class CarroActivity : BaseActivity() {
 
         doAsync {
 
-            val response = CarroServiceRetrofit.delete(carro)
+            // val response = CarroServiceRetrofit.delete(carro)
+            val response = CarroServiceOkHttp.delete(carro)
 
             uiThread {
 

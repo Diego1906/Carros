@@ -20,6 +20,6 @@ object DatabaseManager {
     }
 
     fun getCarroDAO(): CarroDAO {
-        return dbInstance.carroDAO()
+        return dbInstance.carroDAO() 
     }
 }
