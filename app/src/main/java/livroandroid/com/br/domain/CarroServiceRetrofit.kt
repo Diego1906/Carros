@@ -8,18 +8,16 @@ import livroandroid.com.br.utils.TipoCarro
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import livroandroid.com.br.utils.BASE_URL
 
 object CarroServiceRetrofit {
 
-    // ANTIGO
-    // private var BASE_URL = "http://livrowebservices.com.br/rest/carros/"
-    private var BASE_URL = "https://carros-springboot.herokuapp.com/api/v1/carros/"
     private var service: CarrosREST
     private val listCarros: List<Carro> = mutableListOf()
 
     init {
         service = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_URL.CARROS.CARROS)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(CarrosREST::class.java)
@@ -46,14 +44,15 @@ object CarroServiceRetrofit {
 
     // POST
     fun postFoto(file: File): Response {
-        val url = "$BASE_URL/postFotoBase64"
 
         // Converte para Base64
         val bytes = file.readBytes()
         val base64 = Base64.encodeToString(bytes, Base64.NO_WRAP)
         val params = mapOf("fileName" to file.name, "base64" to base64)
-        val json = HttpHelper.postForm(url, params)
-        val response = fromJson<Response>(json)
+
+        val json = HttpHelper.postForm(BASE_URL.UPLOAD, params)
+        val response = fromJson<Response>(json.second)
+        response.code = json.first
         return response
     }
 }

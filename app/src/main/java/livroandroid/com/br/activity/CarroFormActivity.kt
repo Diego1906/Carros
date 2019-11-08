@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_carro_form.*
@@ -22,14 +21,12 @@ import org.jetbrains.anko.uiThread
 
 class CarroFormActivity : BaseActivity() {
 
-    private val TAG = javaClass.simpleName
-
     private val camera: CameraHelper by lazy {
         CameraHelper()
     }
 
-    // O carro pode ser nulo no caso de um Novo Carro
-    val carro: Carro? by lazy {
+    // O carro pode ser nulo no caso de um novo carro
+    private val carro: Carro? by lazy {
         intent.getParcelableExtra<Carro>("carroExtras")
     }
 
@@ -37,7 +34,7 @@ class CarroFormActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carro_form)
 
-        // Título da Toolbar (Nome do carroExtras ou Novo Carro)
+        // Título da Toolbar (Nome do carroExtras ou novo carro)
         setupToolbar(R.id.toolbarCarroForm, carro?.nome ?: getString(R.string.novo_carro))
 
         // Atualiza os dados do formulário
@@ -61,7 +58,7 @@ class CarroFormActivity : BaseActivity() {
             appBarImgCarroForm.loadUrl(carro?.urlFoto)
 
             // Dados do carro
-            desc?.let {
+            descricao?.let {
                 tDesc.string = it
             }
 
@@ -89,8 +86,6 @@ class CarroFormActivity : BaseActivity() {
 
         // Abre a câmera
         startActivityForResult(camera.open(this, fileName), 0)
-
-        Log.d(TAG, "onClickAppBarImg")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -143,52 +138,38 @@ class CarroFormActivity : BaseActivity() {
 
             // Copia valores do form para as propriedades do Carro
             car.nome = tNome.string
-            car.desc = tDesc.string
+            car.descricao = tDesc.string
             car.tipo = when (radioTipo.checkedRadioButtonId) {
                 R.id.tipoClassico -> TipoCarro.classicos.name
                 R.id.tipoEsportivo -> TipoCarro.esportivos.name
                 else -> TipoCarro.luxo.name
             }
 
-//            // Se tiver foto, faz upload
-//            camera.file?.let {
-//
-//                if (it.exists()) {
-//                    val response = CarroServiceOkHttp.postFoto(it)
-//
-//                    if (response.isOK()) {
-//                        // Atualiza a URL da foto no carro
-//                        car.urlFoto = response.url
-//                    }
-//                }
-//            }
-
             lateinit var responsePostFoto: Response
             lateinit var responseCarroSave: Response
 
-            val file = camera.file
+            camera.file?.let {
 
-            if (file != null && file.exists()) {
+                if (it.exists()) {
 
-                responsePostFoto = CarroServiceOkHttp.postFoto(file)
+                    responsePostFoto = CarroServiceOkHttp.postFoto(it)
 
-                if (responsePostFoto.isOK()) {
-                    // Atualiza a URL da foto no carro
-                    car.urlFoto = responsePostFoto.url
+                    if (responsePostFoto.isUrlOK() && responsePostFoto.isCodeSucess()) {
 
-                    // Salva o carro no servidor
-                    responseCarroSave = CarroServiceOkHttp.save(car)
+                        // Atualiza a URL da foto no carro
+                        car.urlFoto = responsePostFoto.url
+                    }
                 }
             }
 
-            uiThread {
-                if (responsePostFoto.isOK()) {
+            // Salva o carro no servidor
+            responseCarroSave = CarroServiceOkHttp.save(car)
 
-                    responseCarroSave?.let {
-                        toast(it.msg)
-                    }
-                } else {
-                    toast(responsePostFoto.msg)
+            uiThread {
+
+                // Mensagem com a resposta do servidor
+                if (responseCarroSave.isCodeSucess()) {
+                    toast("Carro salvo com sucesso")
                 }
 
                 dialog.dismiss()
@@ -201,21 +182,9 @@ class CarroFormActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        Log.d(TAG, "onActivityResult")
-
         if (resultCode == Activity.RESULT_OK) {
 
             // Resize da imagem
-            // val bitmap = camera.getBitmap(600, 600)
-//            bitmap?.let {
-            //// Salva o arquivo neste tamanho
-//                camera.save(it)
-//
-//                // Mostra a foto do carro
-//                appBarImgCarroForm.setImageBitmap(it)
-//            }//
-
-            // Salva o arquivo neste tamanho
             camera.getBitmap(600, 600)?.let {
 
                 // Salva arquivo neste tamanho

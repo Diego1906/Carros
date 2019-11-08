@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_carro_contents.*
 import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
 import livroandroid.com.br.domain.CarroServiceOkHttp
-import livroandroid.com.br.domain.CarroServiceRetrofit
 import livroandroid.com.br.domain.FavoritosService
 import livroandroid.com.br.extensions.loadUrl
 import livroandroid.com.br.extensions.setupToolbar
@@ -29,10 +28,10 @@ class CarroActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_carro)
 
-        // Seta o nome do carroExtras como título da Toolbar
+        // Seta o nome do carro como título da Toolbar
         setupToolbar(R.id.toolBarCarroActivity, carro.nome, true)
 
-        // Atualiza os dados do carroExtras na tela
+        // Atualiza os dados do carro na tela
         initViews()
 
         // Variável gerada automaticamente pelo Kotlin Extensions
@@ -42,8 +41,8 @@ class CarroActivity : BaseActivity() {
     }
 
     private fun initViews() {
-        // Variáveis geradas automaticamente pelo Koltin Extensions (veja import)
-        descricao_carro_contents.text = carro.desc
+        // Variáveis do xml geradas automaticamente pelo Koltin Extensions (veja import)
+        descricao_carro_contents.text = carro.descricao
         appBarImg.loadUrl(carro.urlFoto)
 
         // Foto do Carro (pequena com transparência)
@@ -51,10 +50,12 @@ class CarroActivity : BaseActivity() {
 
         // Toca o vídeo
         imgPlayVideo.setOnClickListener {
-            startActivity(
-                Intent(Intent.ACTION_VIEW).apply {
-                    setDataAndType(Uri.parse(carro.urlVideo), "video/*")
-                })
+            carro.urlVideo?.let {
+                startActivity(
+                    Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(Uri.parse(it), "video/*")
+                    })
+            }
         }
     }
 
@@ -100,7 +101,7 @@ class CarroActivity : BaseActivity() {
 
     // Desenha a cor do FAB conforme está favoritado ou não
     fun setFavoriteColor(favorito: Boolean) {
-        // Troca a cor conforme o status do favoritos
+        // Troca a cor conforme o status dos favoritos
         val fundo = ContextCompat.getColor(
             this,
             if (favorito) R.color.favorito_on
@@ -155,10 +156,7 @@ class CarroActivity : BaseActivity() {
 
             uiThread {
 
-                response?.let {
-                    toast(it.msg)
-                }
-
+                toast(response.msg.toString())
                 finish()
             }
         }

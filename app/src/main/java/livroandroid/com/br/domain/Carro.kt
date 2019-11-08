@@ -12,7 +12,7 @@ class Carro() : Parcelable {
 
     var tipo: String? = ""
     var nome: String? = ""
-    var desc: String? = ""
+    var descricao: String? = ""
     var urlFoto: String? = ""
     var urlInfo: String? = ""
     var urlVideo: String? = ""
@@ -23,7 +23,7 @@ class Carro() : Parcelable {
         id = parcel.readLong()
         tipo = parcel.readString()
         nome = parcel.readString()
-        desc = parcel.readString()
+        descricao = parcel.readString()
         urlFoto = parcel.readString()
         urlInfo = parcel.readString()
         urlVideo = parcel.readString()
@@ -39,7 +39,7 @@ class Carro() : Parcelable {
         parcel.writeLong(id)
         parcel.writeString(tipo)
         parcel.writeString(nome)
-        parcel.writeString(desc)
+        parcel.writeString(descricao)
         parcel.writeString(urlFoto)
         parcel.writeString(urlInfo)
         parcel.writeString(urlVideo)

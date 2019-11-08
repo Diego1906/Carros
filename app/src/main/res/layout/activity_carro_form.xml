@@ -15,6 +15,7 @@
 
         <!-- Conteúdo da tela -->
         <include layout="@layout/activity_carro_form_contents" />
+
     </androidx.core.widget.NestedScrollView>
 
     <!-- Layout da app bar -->
