@@ -15,6 +15,7 @@ import livroandroid.com.br.domain.CarroServiceOkHttp
 import livroandroid.com.br.domain.FavoritosService
 import livroandroid.com.br.extensions.loadUrl
 import livroandroid.com.br.extensions.setupToolbar
+import livroandroid.com.br.fragments.MapaFragment
 import org.jetbrains.anko.*
 
 class CarroActivity : BaseActivity() {
@@ -57,6 +58,15 @@ class CarroActivity : BaseActivity() {
                     })
             }
         }
+
+        // Adiciona o fragment do Mapa
+        val mapaFragment = MapaFragment(this)
+        mapaFragment.arguments = intent.extras
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.mapaFragment, mapaFragment)
+            .commit()
     }
 
     // Adiciona ou Remove o carro dos Favoritos
