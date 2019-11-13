@@ -13,9 +13,12 @@ import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
 import livroandroid.com.br.domain.CarroServiceOkHttp
 import livroandroid.com.br.domain.FavoritosService
+import livroandroid.com.br.domain.event.FavoritoEvent
+import livroandroid.com.br.domain.event.SaveCarroEvent
 import livroandroid.com.br.extensions.loadUrl
 import livroandroid.com.br.extensions.setupToolbar
 import livroandroid.com.br.fragments.MapaFragment
+import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.*
 
 class CarroActivity : BaseActivity() {
@@ -86,6 +89,9 @@ class CarroActivity : BaseActivity() {
 
                 // Atualiza cor do botão FAB
                 setFavoriteColor(favoritado)
+
+                // Dispara um evento para atualizar o lista de favoritos
+                EventBus.getDefault().post(FavoritoEvent(carro))
             }
         }
     }
@@ -168,6 +174,9 @@ class CarroActivity : BaseActivity() {
 
                 toast(response.msg.toString())
                 finish()
+
+                // Dispara um evento para atualizar a lista de carros
+                EventBus.getDefault().post(SaveCarroEvent(carro))
             }
         }
     }

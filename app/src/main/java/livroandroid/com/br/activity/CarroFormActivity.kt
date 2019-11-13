@@ -12,9 +12,11 @@ import livroandroid.com.br.R
 import livroandroid.com.br.domain.Carro
 import livroandroid.com.br.domain.CarroServiceOkHttp
 import livroandroid.com.br.domain.Response
+import livroandroid.com.br.domain.event.SaveCarroEvent
 import livroandroid.com.br.extensions.*
 import livroandroid.com.br.utils.CameraHelper
 import livroandroid.com.br.utils.TipoCarro
+import org.greenrobot.eventbus.EventBus
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
@@ -174,6 +176,9 @@ class CarroFormActivity : BaseActivity() {
 
                 dialog.dismiss()
                 finish()
+
+                // Dispara um evento para atualizar a lista de carros
+                EventBus.getDefault().post(SaveCarroEvent(car))
             }
         }
     }
