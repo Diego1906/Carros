@@ -1,20 +1,18 @@
 package livroandroid.com.br.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 import livroandroid.com.br.R
 import livroandroid.com.br.adapter.TabsAdapter
 import livroandroid.com.br.extensions.setupToolbar
-import livroandroid.com.br.utils.AndroidUtils
-import livroandroid.com.br.utils.TipoCarro
-import livroandroid.com.br.utils.showMessageNoInternet
+import livroandroid.com.br.utils.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -43,7 +41,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private fun setupViewPagerTabs() {
         // As variáveis viewPager e tabLayout são geradas automaticamente pelo Kotlin Extensions
         viewPager.apply {
-            offscreenPageLimit = 2
+            offscreenPageLimit = 3
             adapter = TabsAdapter(context, supportFragmentManager)
         }
 
@@ -54,6 +52,22 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             setupWithViewPager(viewPager, true)
             setTabTextColors(cor, cor)
         }
+
+        // Salva e Recupera a última Tab acessada
+        viewPager.currentItem = Prefs.tabIndex
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrolled(
+                position: Int, positionOffset: Float, positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                // Salva o índice da página/tab selecionada
+                Prefs.tabIndex = position
+            }
+        })
     }
 
     // Configura o Navigation Drawer

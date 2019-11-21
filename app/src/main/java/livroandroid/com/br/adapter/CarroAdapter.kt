@@ -54,5 +54,5 @@ class CarroAdapter(val carros: List<Carro>, val onClick: (Carro) -> Unit) :
     }
 
     // ViewHolder fica vazio pois usamos o import do Android Kotlin Extensions
-    class CarrosViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
+    class CarrosViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

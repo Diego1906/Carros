@@ -17,6 +17,7 @@ class CarrosApplication : Application() {
     }
 
     companion object {
+
         // Singleton da classe Application
         private var appInstance: CarrosApplication? = null
 
